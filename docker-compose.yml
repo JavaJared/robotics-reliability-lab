@@ -1,0 +1,28 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      ROBOT_TOKEN: ${ROBOT_TOKEN:-demo-robot-token}
+      ADMIN_TOKEN: ${ADMIN_TOKEN:-demo-admin-token}
+    volumes:
+      - fleet-data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  simulator:
+    build: .
+    profiles: ["tools"]
+    environment:
+      ROBOT_TOKEN: ${ROBOT_TOKEN:-demo-robot-token}
+    command: ["python", "-m", "robotics_lab.robot_simulator", "--url", "http://api:8080", "--robots", "3", "--cycles", "8"]
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  fleet-data:
