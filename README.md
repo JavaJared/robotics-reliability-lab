@@ -130,13 +130,4 @@ export ADMIN_TOKEN='replace-me-too'
 | `POST` | `/admin/failures` | Enable or disable a failure; admin only |
 | `POST` | `/admin/reset` | Clear failures and reset lab data; admin only |
 
-## Interview walkthrough
-
-1. Start the API and explain the client/API/database boundaries.
-2. Run three robot clients and show registration, heartbeats, assignments, and completion.
-3. Show the structured request logs and correlation IDs.
-4. Enable `assignment_errors` and demonstrate that health becomes unhealthy.
-5. Explain that successful heartbeats narrow the problem away from general network connectivity and toward the assignment path.
-6. Disable the failure, confirm recovery, and connect the evidence to the sample RCA.
-
 See [docs/runbook.md](docs/runbook.md) for investigation procedures and [docs/sample-rca.md](docs/sample-rca.md) for a blameless incident report.
